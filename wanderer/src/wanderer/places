@@ -1,24 +1,18 @@
-field
-You are in a bright, grassy field.
+dense forest
+You are standing in the midde of a dense forest. (add directionals)
 forest
-You are standing in a forest. Fog moves slowly through the trees.
-dark_forest
-You are in a very dark forest. It is eerily silent.
+You are standing in a forest. Fog moves slowly through the trees. (add directionals)
+dark forest
+You are in a very dark forest. It is eerily silent. (add directionals)
+forest
+You are standing in a forest. Fog moves slowly through the trees. (add directionals)
+field
+You are in a bright, grassy field. There is forest to the north, south, and west. You can see a small hut in the distance to the east.
 hut
 You are in a small hut, lit by candles. A single chair sits next to a small table. (knife)
-border
-If you're reading this, the program's about to break. Go the other direction.
-field
-You are in a bright, grassy field.
+dark forest
+You are in a very dark forest. It is eerily silent. (add directionals)
 forest
-You are standing in a forest. Fog moves slowly through the trees.
-dark_forest
-You are in a very dark forest. It is eerily silent.
-hut
-You are in a small hut, lit by candles. A single chair sits next to a small table. (knife)
-name_a
-description_bbb
-name_c
-description_dddd
-name_e
-description_ffff
+You are standing in a forest. Fog moves slowly through the trees. (add directionals)
+dark forest
+You are in a very dark forest. It is eerily silent. (add directionals)
