@@ -16,9 +16,9 @@ dark_forest
 You are in a very dark forest. It is eerily silent.
 hut
 You are in a small hut, lit by candles. A single chair sits next to a small table. (knife)
-a
-bbb
-c
-dddd
-e
-ffff
+name_a
+description_bbb
+name_c
+description_dddd
+name_e
+description_ffff
