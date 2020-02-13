@@ -1,9 +1,7 @@
 package wanderer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class Game {
@@ -39,27 +37,33 @@ public class Game {
 
 	/**
 	 * This function creates a coordinate grid of Room objects
-	 * @param read Scanner to read content from file
+	 * @param read Scanner to read content from gamedata file
 	 * @return Room[] array of all rooms, each with a unique index.
+	 * @throws FileNotFoundException 
 	 */
-	public static Room[] createMap(Scanner read) {
-		//Declare dimensions of game board
+	public static Room[] createMap() throws FileNotFoundException {
+		//Declare dimensions of game board (adjust these based on game content)
 		int length = 3;
 		int height = 3;
 
+		//Open scanner dedicated to reading
+		Scanner read = new Scanner(new FileReader("/Users/george/git/wanderer/wanderer/src/wanderer/places"));
+		
 		//Create array of Rooms based on those dimensions - "game grid"
 		Room[] ggrid = new Room[length * height];
 
+		//n keeps track of index for Room array
 		int n = 0;
 		
 		//Outer for loop keeps track of x (N/S)
-		for (int i = 0; i > length; i++) {
+		for (int i = 0; i < length; i++) {
 			//Inner for loop keeps track of y (E/W)
-			for (int j = 0; j > height; j++) {
+			for (int j = 0; j < height; j++) {
 				ggrid[n] = new Room(read.nextLine(), read.nextLine(), i, j);
 				n++;
 			}
 		}
+		read.close();
 		return ggrid;
 	}
 
@@ -110,6 +114,7 @@ public class Game {
 	 * @return boolean (false to quit the program)
 	 */
 	public static boolean takeInput(Scanner s, Player p, Room[] g) {
+		
 		//Store user's command in a String
 		String cmd = s.nextLine();
 
@@ -145,6 +150,7 @@ public class Game {
 		//Function for looking around
 		if (cmd.equals("look")) {
 			output(look(p, g));
+			return true;
 		}
 		
 		//Will return 1 if the player enters a movement command
@@ -191,36 +197,26 @@ public class Game {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
+		//Create input scanner
 		Scanner input = new Scanner(System.in);
 
 		//Declare gamestate variable
 		boolean game = true;
-
+		
+		//Create game map
+		Room[] gameMap = createMap();
+				
 		//Create new player (with starting coords)
 		Player george = new Player(0, 0);
 		
-		//Open scanner dedicated to reading
-		Scanner read = new Scanner(new File("/Users/george/git/wanderer/wanderer/src/wanderer/places"));
-		
-		//Create map, close reader
-		Room[] ggrid = createMap(read);
-		//read.close();
-		
+		//Print game opening
 		System.out.printf("%s%n%nType \"info\" for more info.%n>", opening);
 		
-		/*
-		 * Test Room[] creation
-		 */
-		Room testroom = new Room("testroom", "you're in a room that's a test", 0, 0);
-		output(testroom.toString());
-		output(ggrid[0].toString());
-		
-		
-		//Takes parameters Scanner input, Player, and Room[] array. Runs game
+		//Takes parameters Scanner input, Player, and Room[] game map. Runs game
 		do {
-			game = takeInput(input, george, ggrid);
+			game = takeInput(input, george, gameMap);
 		} while (game);
-
+		
 		input.close();
 	}
 
