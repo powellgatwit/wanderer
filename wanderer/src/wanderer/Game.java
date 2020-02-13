@@ -2,6 +2,8 @@ package wanderer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 
 public class Game {
@@ -12,6 +14,7 @@ public class Game {
 	//Help message
 	public final static String help = String.format("To play the game, type short commands below. If you type the word \"look,\" %nI will describe your surroundings to you. Typing \"inventory\" tells you %nwhat you're carrying. Typing \"take\" or \"drop\" can help you %ninteract with things. Type \"exit\" to quit \"help\" to see this message again. There are many more commands, so try different things, and %nsee what happens.");
 	
+	//Info message
 	public final static String info = String.format("You are wandering through a desolate wilderness, with no people around for hundreds of %nmiles. Nearby is an abandoned town where high society once enjoyed peace and prosperity. Historical %ndocuments speak of a strange and powerful artifact that turns ordinary objects into %ngold, but it is rumored that those who venture out to find it never return...");
 	
 	/**
@@ -183,9 +186,11 @@ public class Game {
 
 	/**
 	 * Provides an environment for the game to run
+	 * Throws FileNotFoundException if gamedata file is not found
 	 * @param args (ignored)
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		Scanner input = new Scanner(System.in);
 
 		//Declare gamestate variable
@@ -193,25 +198,22 @@ public class Game {
 
 		//Create new player (with starting coords)
 		Player george = new Player(0, 0);
-
-		Scanner read = null;
-
+		
 		//Open scanner dedicated to reading
-		try {
-			read = new Scanner(new File("/Users/george/eclipse-workspace/adventure/src/adventure/places"));
-		} catch (FileNotFoundException e) {
-			System.out.printf("Gamedata file not found.%n");
-		}
+		Scanner read = new Scanner(new File("/Users/george/git/wanderer/wanderer/src/wanderer/places"));
+		
 		//Create map, close reader
 		Room[] ggrid = createMap(read);
-		read.close();
+		//read.close();
 		
 		System.out.printf("%s%n%nType \"info\" for more info.%n>", opening);
 		
-		
-		//Room testroom = new Room("testroom", "you're in a room that's a test", 0, 0);
-		//output(testroom.toString());
-		//output(ggrid[0].toString());
+		/*
+		 * Test Room[] creation
+		 */
+		Room testroom = new Room("testroom", "you're in a room that's a test", 0, 0);
+		output(testroom.toString());
+		output(ggrid[0].toString());
 		
 		
 		//Takes parameters Scanner input, Player, and Room[] array. Runs game
