@@ -66,7 +66,13 @@ public class Game {
 		read.close();
 		return ggrid;
 	}
-
+	
+	/**
+	 * 
+	 * @param p Player
+	 * @param grid Game map
+	 * @return description of where the player is standing
+	 */
 	public static String look(Player p, Room[] grid) {
 		//for every room that exists:
 		for (int i = 0; i < grid.length; i++) {
@@ -92,7 +98,9 @@ public class Game {
 	public static int move(Player p, String cmd) {
 		//Declare valid directional commands
 		String[] directions = {"n", "north", "s", "south", "e", "east", "w", "west"};
-
+		
+		// TODO: implement procedure for when a player tries to move to an invalid location
+		
 		for (int i = 0; i < directions.length; i++) {
 			//Compare user's command with every element of directions[]
 			if (cmd.toLowerCase().equals(directions[i])) {
@@ -129,10 +137,10 @@ public class Game {
 
 		//Reject all commands with more than two words
 		if (cmds.length > 2) {
-			output(invalidCommand());
+			output("I can't understand more than two words.");
 			return true;
 		}
-
+		
 		//Basic exit and help commands
 		if (cmd.equals("exit")) {
 			return false;
@@ -209,7 +217,7 @@ public class Game {
 		Room[] gameMap = createMap();
 			
 		//Create new player (with starting coords)
-		Player george = new Player(0, 0);
+		Player george = new Player(1, 1);
 		
 		//Print game opening
 		System.out.printf("%s%n%nType \"info\" for more info.%n>", opening);

@@ -15,6 +15,7 @@ public class Room {
 	 * 
 	 */
 	
+	//TODO: Is "name" necessary?
 	private String name = "";
 	
 	private String desc = "";
