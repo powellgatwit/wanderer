@@ -98,8 +98,8 @@ public class Game {
 			if (cmd.toLowerCase().equals(directions[i])) {
 				//Change player's location
 				p.changeLoc(cmd);
-				//Print location coordinates
-				output(p.printLoc());
+				//Print location coordinates (DEBUG ONLY)
+				//output(p.printLoc());
 				return 1;
 			}
 		}
@@ -156,6 +156,7 @@ public class Game {
 		//Will return 1 if the player enters a movement command
 		int movement = move(p, cmd);
 		if (movement == 1) {
+			output(look(p, g));
 			return true;
 		}
 
@@ -183,8 +184,9 @@ public class Game {
 		return true;
 	}
 
-	/*
-	 * Outputs to console with desired formatting
+	/**
+	 * Format and output a string
+	 * @param s String to be formatted and output
 	 */
 	public static void output(String s) {
 		System.out.printf("%s%n>", s);
@@ -199,13 +201,13 @@ public class Game {
 	public static void main(String[] args) throws FileNotFoundException {
 		//Create input scanner
 		Scanner input = new Scanner(System.in);
-
+		
 		//Declare gamestate variable
 		boolean game = true;
 		
 		//Create game map
 		Room[] gameMap = createMap();
-				
+			
 		//Create new player (with starting coords)
 		Player george = new Player(0, 0);
 		
