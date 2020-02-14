@@ -7,13 +7,16 @@ import java.util.Scanner;
 public class Game {
 
 	//Opening message
-	public final static String opening = String.format("Welcome to Wanderer 1.0. To play the game, type short commands below. If you type %nthe word \"look,\" I will describe your surroundings to you. Typing %n\"inventory\" tells you what you're carrying. Typing \"take\" or \"drop\" can help you %ninteract with things. Type \"exit\" to quit \"help\" to see this message again. %nThere are many more commands, so try different things, and see what happens.");
+	public static final String opening = String.format("Welcome to Wanderer 1.0. To play the game, type short commands below. If you type %nthe word \"look,\" I will describe your surroundings to you. Typing %n\"inventory\" tells you what you're carrying. Typing \"take\" or \"drop\" can help you %ninteract with things. Type \"exit\" to quit \"help\" to see this message again. %nThere are many more commands, so try different things, and see what happens.");
 
 	//Help message
-	public final static String help = String.format("To play the game, type short commands below. If you type the word \"look,\" %nI will describe your surroundings to you. Typing \"inventory\" tells you %nwhat you're carrying. Typing \"take\" or \"drop\" can help you %ninteract with things. Type \"exit\" to quit \"help\" to see this message again. There are many more commands, so try different things, and %nsee what happens.");
+	public static final String help = String.format("To play the game, type short commands below. If you type the word \"look,\" %nI will describe your surroundings to you. Typing \"inventory\" tells you %nwhat you're carrying. Typing \"take\" or \"drop\" can help you %ninteract with things. Type \"exit\" to quit \"help\" to see this message again. There are many more commands, so try different things, and %nsee what happens.");
 	
 	//Info message
-	public final static String info = String.format("You are wandering through a desolate wilderness, with no people around for hundreds of %nmiles. Nearby is an abandoned town where high society once enjoyed peace and prosperity. Historical %ndocuments speak of a strange and powerful artifact that turns ordinary objects into %ngold, but it is rumored that those who venture out to find it never return...");
+	public static final String info = String.format("You are wandering through a desolate wilderness, with no people around for hundreds of %nmiles. Nearby is an abandoned town where high society once enjoyed peace and prosperity. %nHistorical documents speak of a strange and powerful artifact that turns ordinary objects %ninto gold, but it is rumored that those who venture out to find it never return...");
+	
+	//Invalid movement message
+	public static final String invalid = "You can't go that direction from here.";
 	
 	/**
 	 * Contains array of strings and a random number generator
@@ -45,8 +48,9 @@ public class Game {
 		//Declare dimensions of game board (adjust these based on game content)
 		int length = 3;
 		int height = 3;
-
+		
 		//Open scanner dedicated to reading
+		//TODO: Find out how to make this portable
 		Scanner read = new Scanner(new FileReader("/Users/george/git/wanderer/wanderer/src/wanderer/places"));
 		
 		//Create array of Rooms based on those dimensions - "game grid"
@@ -95,7 +99,7 @@ public class Game {
 	 * @param String cmd
 	 * @return int 0 or 1
 	 */
-	public static int move(Player p, String cmd) {
+	public static int move(Player p, String cmd, Room[] grid) {
 		//Declare valid directional commands
 		String[] directions = {"n", "north", "s", "south", "e", "east", "w", "west"};
 		
@@ -103,14 +107,40 @@ public class Game {
 		
 		for (int i = 0; i < directions.length; i++) {
 			//Compare user's command with every element of directions[]
-			if (cmd.toLowerCase().equals(directions[i])) {
+			cmd = cmd.toLowerCase();
+			if (cmd.equals(directions[i])) {
+				//if user moves n,s,e,w:
 				//Change player's location
 				p.changeLoc(cmd);
-				//Print location coordinates (DEBUG ONLY)
+				
+				//if the player moves to a location with a valid room:
+				if(!(look(p, grid).equals("The player is not in a room..."))) {
+					return 1;
+				} else {
+				//if invalid, change the player xy to what it was before
+				//since this is local, it's like the player never moved
+					if (cmd.equals("n") || cmd.equals("north")) {
+						p.changeLoc("s");
+					} else if (cmd.equals("s") || cmd.equals("south")) {
+						p.changeLoc("n");
+					} else if (cmd.equals("e") || cmd.equals("east")) {
+						p.changeLoc("w");
+					} else if (cmd.equals("w") || cmd.equals("west")) {
+						p.changeLoc("e");
+					} else {
+						output("Something went wrong when the user tried to move to a Room[] that doesn't exist");
+					}
+					output(invalid);
+				}
+				//Print new location coordinates (DEBUG ONLY)
 				//output(p.printLoc());
-				return 1;
+				
+				//end function, successful move
+				return 0;
+				
 			}
 		}
+		//end function, unsuccessful move (player did not enter movement command)
 		return 0;
 	}
 
@@ -162,9 +192,12 @@ public class Game {
 		}
 		
 		//Will return 1 if the player enters a movement command
-		int movement = move(p, cmd);
+		int movement = move(p, cmd, g);
 		if (movement == 1) {
 			output(look(p, g));
+			return true;
+		} else if (movement == 0) {
+			//Still returns true if the player tries to move somewhere naughty
 			return true;
 		}
 
