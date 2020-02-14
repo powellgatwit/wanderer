@@ -15,7 +15,9 @@ public class Room {
 	 * 
 	 */
 	
-	//TODO: Is "name" necessary?
+	// TODO: Add ArrayList for items that can be in the room
+	
+	//Is "name" necessary?
 	private String name = "";
 	
 	private String desc = "";

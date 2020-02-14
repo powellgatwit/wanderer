@@ -11,15 +11,14 @@ public class Player {
 	private static int[] loc = {0, 0};
 	private static int n, s, e, w;
 	
+	//A player can only have 10 items in their inventory (slot 0-9)
+	// TODO: change to ArrayList
+	private static String[] inv = {"", "", "", "", "", "", "", "", "", ""};
+	
 	Player(int x, int y) {
 		loc[0] = x;
 		loc[1] = y;
 	}
-	
-	/*
-	 * How do I create many different rooms efficiently?
-	 * Tie them to playerLoc. Each "room" will be a coordinate.
-	 */
 	
 	/**
 	 * Changes current x-y coordinates
@@ -49,7 +48,8 @@ public class Player {
 	
 	/**
 	 * Makes a x-y coordinate pretend to be a NSEW coordinate.
-	 * Prints location like so: (debug only.)
+	 * Debug purposes only.
+	 * Prints location like so:
 	 * N: 0
 	 * S: 0
 	 * E: 0
@@ -75,6 +75,15 @@ public class Player {
 		}
 		
 		return String.format("N: %d%nS: %d%nE: %d%nW: %d", n, s, e, w);
+	}
+	
+	public String[] getInv() {
+		return inv;
+	}
+	
+	public void addInv(String item) {
+		// TODO: implement with ArrayList
+		//This would be a lot easier with Arraylists
 	}
 	
 	public int[] getLoc() {

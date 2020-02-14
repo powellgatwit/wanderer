@@ -16,7 +16,7 @@ public class Game {
 	public static final String info = String.format("You are wandering through a desolate wilderness, with no people around for hundreds of %nmiles. Nearby is an abandoned town where high society once enjoyed peace and prosperity. %nHistorical documents speak of a strange and powerful artifact that turns ordinary objects %ninto gold, but it is rumored that those who venture out to find it never return...");
 	
 	//Invalid movement message
-	public static final String invalid = "You can't go that direction from here.";
+	public static final String invalid = String.format("You can't go that direction from here.");
 	
 	/**
 	 * Contains array of strings and a random number generator
@@ -35,7 +35,6 @@ public class Game {
 		int r = (int) (Math.floor(Math.random() * responses.length));
 
 		return responses[r];
-
 	}
 
 	/**
@@ -103,8 +102,6 @@ public class Game {
 		//Declare valid directional commands
 		String[] directions = {"n", "north", "s", "south", "e", "east", "w", "west"};
 		
-		// TODO: implement procedure for when a player tries to move to an invalid location
-		
 		for (int i = 0; i < directions.length; i++) {
 			//Compare user's command with every element of directions[]
 			cmd = cmd.toLowerCase();
@@ -115,6 +112,7 @@ public class Game {
 				
 				//if the player moves to a location with a valid room:
 				if(!(look(p, grid).equals("The player is not in a room..."))) {
+					//end function, successful move
 					return 1;
 				} else {
 				//if invalid, change the player xy to what it was before
@@ -135,12 +133,12 @@ public class Game {
 				//Print new location coordinates (DEBUG ONLY)
 				//output(p.printLoc());
 				
-				//end function, successful move
-				return 0;
+				//end function, unsuccessful move
+				return -1;
 				
 			}
 		}
-		//end function, unsuccessful move (player did not enter movement command)
+		//end function, player did not enter movement command
 		return 0;
 	}
 
@@ -185,21 +183,46 @@ public class Game {
 			return true;
 		}
 		
+		// TODO: implement items
+		
+		//any item can be inside any room. they can be picked up and dropped.
+		//picking up an item should ADD it from Player inventory
+		//dropping it should REMOVE from Player inventory and ADD to that room
+		
+		// items are going to be Strings
+		
+		//Function for displaying inventory
+		if (cmd.equals("inventory") || cmd.equals("inv")) {
+			
+			// TODO: delete this, add ArrayList functionality
+			
+			String[] inv = p.getInv();
+			String inventory = String.format("You are carrying: %n");
+			for (int i = 0; i < inv.length; i++) {
+				if(!(inv[i].equals(""))) {
+					inventory += inv[i] + String.format("%n");
+				}
+				//yeah, this is going to be deleted. use an arraylist.
+			}
+			output(inventory);
+			return true;
+		}
+		
 		//Function for looking around
 		if (cmd.equals("look")) {
 			output(look(p, g));
 			return true;
 		}
 		
-		//Will return 1 if the player enters a movement command
+		//Will return 1 if the player enters a movement command to a valid Room
 		int movement = move(p, cmd, g);
 		if (movement == 1) {
 			output(look(p, g));
 			return true;
-		} else if (movement == 0) {
-			//Still returns true if the player tries to move somewhere naughty
+		//Will return -1 if the player enters a valid movement command to an invalid Room
+		} else if (movement == -1) {
 			return true;
-		}
+		}//returns zero otherwise
 
 		//Declare valid PREFIX (action) commands. Currently unused
 		String[] actions = {"take", "drop", "use"};

@@ -1,18 +1,18 @@
 dense forest
-You are standing in the midde of a dense forest. (add directionals)
+You are 0,0 standing in the midde of a dense forest. (add directionals)
 forest
-You are standing in a forest. Fog moves slowly through the trees. (add directionals)
+You are 0,1 standing in a forest. Fog moves slowly through the trees. (add directionals)
 dark forest
-You are in a very dark forest. It is eerily silent. (add directionals)
+You are 0,2 in a very dark forest. It is eerily silent. (add directionals)
 forest
-You are standing in a forest. Fog moves slowly through the trees. (add directionals)
+You are 1,0 standing in a forest. Fog moves slowly through the trees. (add directionals)
 field
-You are in a bright, grassy field. There is forest to the north, south, and west. You can see a small hut in the distance to the east.
+You are 1,1 in a bright, grassy field. There is forest to the north, south, and west. You can see a small hut in the distance to the east.
 hut
-You are in a small hut, lit by candles. A single chair sits next to a small table. (knife)
+You are 1,2 in a small hut, lit by candles. A single chair sits next to a small table. (knife)
 dark forest
-You are in a very dark forest. It is eerily silent. (add directionals)
+You are 2,0 in a very dark forest. It is eerily silent. (add directionals)
 forest
-You are standing in a forest. Fog moves slowly through the trees. (add directionals)
+You are 2,1 standing in a forest. Fog moves slowly through the trees. (add directionals)
 dark forest
-You are in a very dark forest. It is eerily silent. (add directionals)
+You are 2,2 in a very dark forest. It is eerily silent. (add directionals)
